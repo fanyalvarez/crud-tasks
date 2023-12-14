@@ -12,5 +12,6 @@ index.js = arranca la app, llama la bd, express u otros servicos
 app.js = config de express
 
 
-
+ZvECDSHSCNw98Rt9
 Nodemon={comando nuevo para que reinicie el servidor o ejecutar el codigo="scripts": {"dev": "nodemon src/index.js"},}
+morgan = ver las peticiones que llegan al back por consola
