@@ -1,0 +1,16 @@
+controllers = crearf unciones que se ejecutan cuando se visita una url 
+libs = escribir codigo para reimportar - generar tokens
+middlewares = rutas protegidas por usuarios   -- publica o privada  if esta logion o no que informacion dar 
+models = modelos de datos-que datos queremos que guarde
+routes = urls del back-endpoits que el front puede pedir 
+schemas - biblioteca zoft para hacer validaciones cuando lleguen al back
+
+
+db.js = conexion de base de datos
+config.js =  crar config que los archivos pueden importar  o port o variable muy usada -- config global
+index.js = arranca la app, llama la bd, express u otros servicos 
+app.js = config de express
+
+
+
+Nodemon={comando nuevo para que reinicie el servidor o ejecutar el codigo="scripts": {"dev": "nodemon src/index.js"},}
