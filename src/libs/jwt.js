@@ -4,7 +4,7 @@ import { TOKEN_SECRET } from "../config.js";
 
 export function createAccesToken(payload) {
 
-    new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
         jwt.sign({
             payload
         },
