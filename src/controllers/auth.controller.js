@@ -1,7 +1,8 @@
 import { response } from "express";
 import User from "../models/user.models.js";
 import bcrypt from "bcryptjs";
-import { createAccesToken } from '../libs/jwt.js'
+import { createAccessToken } from '../libs/jwt.js'
+
 
 
 //procesar peticiones
@@ -18,15 +19,15 @@ export const register = async (req, res) => {
         })//solo esta en el backend 
 
         const userSaved = await newUser.save()
-        const token = await createAccesToken({ id: userSaved._id });
+        const token = await createAccessToken({ id: userSaved._id });
 
-        res.cookie('token cookie', token)
+        res.cookie("token", token)
         res.json({
             id: userSaved._id,
             username: userSaved.username,
             email: userSaved.email,
-            createAt: userSaved.createdAt,
-            upddateAt: userSaved.updatedAt
+            createdAt: userSaved.createdAt,
+            updatedAt: userSaved.updatedAt
         })
 
     } catch (error) {
@@ -45,14 +46,14 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, userFound.password)
         if (!isMatch) return res.status(400).json({ message: "Incorrect password" });
 
-        const token = await createAccesToken({ id: userFound._id });
-        res.cookie('token cookie', token)
+        const token = await createAccessToken({ id: userFound._id });
+        res.cookie("token", token)
         res.json({
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
-            createAt: userFound.createdAt,
-            upddateAt: userFound.updatedAt
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt
         })
 
     } catch (error) {
@@ -62,9 +63,13 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    res.cookie('token', "", {
+    res.cookie("token", "", {
         expires: new Date(0)
     })
     return res.sendStatus(200)
+}
+
+export const profile = (req, res) => {
+    res.send('profile')
 }
 
