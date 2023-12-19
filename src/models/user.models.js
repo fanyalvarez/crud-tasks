@@ -1,6 +1,6 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
-// const userSchema = mongoose.Schema({
+//usurios que se van creando y guardando
 const userSchema = new mongoose.Schema({ //new lo vuelve metodo y se puede usar para mas cosas
     username: {
         type: String,
