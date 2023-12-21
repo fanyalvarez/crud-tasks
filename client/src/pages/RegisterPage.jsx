@@ -1,22 +1,45 @@
 import { useForm } from "react-hook-form";
 import { registerRequest } from "../api/auth.js";
+import { useAuth } from "../context/AuthContext.jsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
+  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/tasks");
+  }, [isAuthenticated]);
+
   const onsubmit = handleSubmit(async (data) => {
-    const resp = await registerRequest(data);
-    console.log(resp);
+    // const resp = await registerRequest(data);
+    // console.log(resp);
+    signup(data);
   });
 
   return (
     <div className="max-w-md p-10 rounded-md bg-zinc-800">
+      {registerErrors.map((error, i) => (
+        <span className="bg-red-800 text-white p-1 rounded text-xs" key={i}>
+          {error}
+        </span>
+      ))}
       <form onSubmit={onsubmit}>
         <input
           type="text"
           {...register("username", { required: true })}
           className="w-full bg-zinc-700 text-white px-4 py4 rounded-md mt-2"
-          placeholder="User name"
+          placeholder="Username"
         />
+        {errors.username && (
+          <p className="text-red-500">Username is required</p>
+        )}
 
         <input
           type="email"
@@ -24,6 +47,7 @@ function RegisterPage() {
           className="w-full bg-zinc-700 text-white px-4 py4 rounded-md mt-2"
           placeholder="Email"
         />
+        {errors.email && <p className="text-red-500">Email is required</p>}
 
         <input
           type="password"
@@ -31,6 +55,10 @@ function RegisterPage() {
           className="w-full bg-zinc-700 text-white px-4 py4 rounded-md mt-2"
           placeholder="Password"
         />
+        {errors.password && (
+          <p className="text-red-500">Password is required</p>
+        )}
+
         <button
           type="submit"
           className="border-solid border-2 border-cyan-800 rounded p-0.5 mt-2">
