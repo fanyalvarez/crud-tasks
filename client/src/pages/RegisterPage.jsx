@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { registerRequest } from "../api/auth.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function RegisterPage() {
   const {
@@ -25,6 +25,7 @@ function RegisterPage() {
 
   return (
     <div className="max-w-md p-10 rounded-md bg-zinc-800">
+      <h1 className="text-2xl font-bold mb-2">Register </h1>
       {registerErrors.map((error, i) => (
         <span className="bg-red-800 text-white p-1 rounded text-xs" key={i}>
           {error}
@@ -61,10 +62,17 @@ function RegisterPage() {
 
         <button
           type="submit"
-          className="border-solid border-2 border-cyan-800 rounded p-0.5 mt-2">
-          Register
+          className="border-solid border-2 border-cyan-800 rounded px-2 mt-2">
+          Send
         </button>
       </form>
+
+      <p className="flex gap-x-2 justify-between my-2">
+        Already have an account?
+        <Link to="/login" className="text-green-600">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }
