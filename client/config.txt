@@ -1,0 +1,4 @@
+
+
+js-cookie   sirve para que lea las cookies en el front end
+

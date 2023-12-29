@@ -1,9 +1,12 @@
 //provider es un componente que guarda mas componentes y tien una propiedad value que recibe datos
 
-import { createContext, useState , useContext , useEffect} from "react";
-import { registerRequest, loginRequest } from "../api/auth.js";
-
-
+import { createContext, useState, useContext, useEffect } from "react";
+import {
+  registerRequest,
+  loginRequest,
+  verifyTokenRequest,
+} from "../api/auth.js";
+import Cookies from "js-cookie";
 export const AuthContext = createContext();
 
 //useauth tre todos los datos de authcontextprovider
@@ -24,21 +27,20 @@ export const AuthProvider = ({ children }) => {
     try {
       const resp = await registerRequest(user);
       setUser(resp.data);
-      setIsAuthenticated(true);
-      // console.log(user);
+      setIsAuthenticated(true); // console.log(user);
     } catch (error) {
-      setErrors(error.response.data);
-      // console.log(errors);
+      setErrors(error.resp.data); // console.log(errors);
     }
   };
 
   const signin = async (user) => {
     try {
-      const resp = await loginRequest(user);
-      console.log(resp);
+      const resp = await loginRequest(user); // console.log(resp);
+      setIsAuthenticated(true);
+      setUser(resp.data);
     } catch (error) {
-      setErrors(error.response.data);
-      console.log(error.response.data);
+      setErrors(error.resp.data);
+      console.log(error.resp.data);
     }
   };
 
@@ -51,6 +53,31 @@ export const AuthProvider = ({ children }) => {
       return () => clearTimeout(timer);
     }
   }, [errors]);
+
+  //cookies
+  useEffect(() => {
+    async function checkLogin() {
+      const cookies = Cookies.get();
+
+      if (!cookies.token) {
+        setIsAuthenticated(false);
+        setUser(null);
+        return;
+      }
+
+      try {
+        const respCookies = await verifyTokenRequest(cookies.token);
+        if (!respCookies) return setIsAuthenticated(false);
+        setIsAuthenticated(true);
+        setUser(respCookies);
+
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    }
+    checkLogin();
+  }, []);
 
   return (
     <AuthContext.Provider
