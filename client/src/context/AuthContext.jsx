@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const signup = async (user) => {
     try {
@@ -35,7 +36,8 @@ export const AuthProvider = ({ children }) => {
 
   const signin = async (user) => {
     try {
-      const resp = await loginRequest(user); // console.log(resp);
+      const resp = await loginRequest(user);
+      console.log(resp);
       setIsAuthenticated(true);
       setUser(resp.data);
     } catch (error) {
@@ -58,21 +60,30 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function checkLogin() {
       const cookies = Cookies.get();
+      // console.log(cookies.token);
 
       if (!cookies.token) {
         setIsAuthenticated(false);
-        setUser(null);
-        return;
+        setLoading(false);
+        return setUser(null);
       }
 
       try {
         const respCookies = await verifyTokenRequest(cookies.token);
-        if (!respCookies) return setIsAuthenticated(false);
+        // console.log(respCookies.data)
+        if (!respCookies.data) {
+          setIsAuthenticated(false);
+          setLoading(false);
+          return;
+        }
+
         setIsAuthenticated(true);
-        setUser(respCookies);
+        setUser(respCookies.data);
+        setLoading(false);
 
       } catch (error) {
         setIsAuthenticated(false);
+        setLoading(false);
         setUser(null);
       }
     }
@@ -81,7 +92,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signup, user, isAuthenticated, errors, signin }}>
+      value={{ signup, user, isAuthenticated, errors, loading, signin }}>
       {children}
     </AuthContext.Provider>
   );

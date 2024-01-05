@@ -1,9 +1,9 @@
-
+import { useAuth } from "../context/AuthContext";
 
 function TaksPage() {
-  return (
-    <div>TaksPage</div>
-  )
+  const { user } = useAuth();
+  console.log(user)
+  return <div>TaksPage</div>;
 }
 
-export default TaksPage
+export default TaksPage;

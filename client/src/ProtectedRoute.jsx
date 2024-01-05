@@ -2,10 +2,12 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
 function ProtectedRoute() {
-  const { user, isAuthenticated } = useAuth();
-  // console.log(user)
+  const { loading, user, isAuthenticated } = useAuth();
+  console.log(loading, user, isAuthenticated, "from proctrou");
+
   //saber si el usuaro esta autenticado
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (loading) return <h1>Loading...</h1>;
+  if (!loading && !isAuthenticated) return <Navigate to="/login" replace />;
   return <Outlet />; //solo es para que vaya al componente que esta adentro
 }
 

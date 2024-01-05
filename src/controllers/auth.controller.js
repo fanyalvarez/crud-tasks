@@ -28,7 +28,7 @@ export const register = async (req, res) => {
         const userSaved = await newUser.save()
         const token = await createAccessToken({ id: userSaved._id });
 
-        res.cookie("token", token)
+        res.cookie("token", token, {sameSite:'none'})
         res.json({
             id: userSaved._id,
             username: userSaved.username,
@@ -104,9 +104,10 @@ export const verifyToken = async (req, res) => {
         // console.log(userFound, 'userFound')
 
         if (!userFound) return res.status(401).json({ message: 'Unauthorized user not exist' })
+
         return res.json({
             id: userFound.id,
-            username: userFound.name,
+            username: userFound.username,
             email: userFound.email
         })
     })
