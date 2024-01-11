@@ -16,14 +16,10 @@ function RegisterPage() {
   useEffect(() => {
     if (isAuthenticated) navigate("/login");
   }, [isAuthenticated]);
- 
 
   const onsubmit = handleSubmit(async (data) => {
     // const resp = await registerRequest(data);
-    // console.log(resp);
-    signup(data);
-    navigate("/login")
-    
+    await signup(data);
   });
 
   return (

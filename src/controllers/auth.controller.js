@@ -16,7 +16,7 @@ export const register = async (req, res) => {
         //verificar si el user existe
         const userFound = await User.findOne({ email })
         if (userFound) {
-            return res.status(400).json(["The email is already exists"])
+            return res.status(400).json(["The email is already in use"])
         }
         const passwordHash = await bcrypt.hash(password, 10)
         const newUser = new User({
@@ -28,7 +28,7 @@ export const register = async (req, res) => {
         const userSaved = await newUser.save()
         const token = await createAccessToken({ id: userSaved._id });
 
-        res.cookie("token", token, {sameSite:'none'})
+        res.cookie("token", token, { sameSite: 'none' })
         res.json({
             id: userSaved._id,
             username: userSaved.username,
@@ -38,8 +38,8 @@ export const register = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: error.message })
+        // console.log(error)
+        res.status(500).json([error.message])
     }
 };
 
@@ -48,10 +48,10 @@ export const login = async (req, res) => {
 
     try {
         const userFound = await User.findOne({ email });
-        if (!userFound) return res.status(400).json(["user not found"]);
+        if (!userFound) return res.status(400).json({ message: ["user not found"] });
 
         const isMatch = await bcrypt.compare(password, userFound.password)
-        if (!isMatch) return res.status(400).json(["Incorrect password"]);
+        if (!isMatch) return res.status(400).json({ message: ["Incorrect password"] });
 
         const token = await createAccessToken({ id: userFound._id });
         res.cookie("token", token)
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         res.status(500).json({ message: error.message })
     }
 };

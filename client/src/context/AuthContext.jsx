@@ -28,9 +28,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const resp = await registerRequest(user);
       setUser(resp.data);
-      setIsAuthenticated(false); // console.log(user);
+      setIsAuthenticated(false); 
+      console.log(user);
     } catch (error) {
-      setErrors(error.resp.data); // console.log(errors);
+      setErrors(error.response.data); 
+      console.log(errors);
     }
   };
 
@@ -41,8 +43,9 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setUser(resp.data);
     } catch (error) {
-      setErrors(error.resp.data);
-      console.log(error.resp.data);
+      setErrors(error.response.data);
+      console.log(errors);
+
     }
   };
 
