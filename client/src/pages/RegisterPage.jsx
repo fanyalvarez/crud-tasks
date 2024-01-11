@@ -14,13 +14,16 @@ function RegisterPage() {
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/tasks");
+    if (isAuthenticated) navigate("/login");
   }, [isAuthenticated]);
+ 
 
   const onsubmit = handleSubmit(async (data) => {
     // const resp = await registerRequest(data);
     // console.log(resp);
     signup(data);
+    navigate("/login")
+    
   });
 
   return (
