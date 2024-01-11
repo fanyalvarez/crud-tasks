@@ -48,10 +48,10 @@ export const login = async (req, res) => {
 
     try {
         const userFound = await User.findOne({ email });
-        if (!userFound) return res.status(400).json({ message: ["user not found"] });
+        if (!userFound) return res.status(400).json(["user not found"]);
 
         const isMatch = await bcrypt.compare(password, userFound.password)
-        if (!isMatch) return res.status(400).json({ message: ["Incorrect password"] });
+        if (!isMatch) return res.status(400).json(["Incorrect password"]);
 
         const token = await createAccessToken({ id: userFound._id });
         res.cookie("token", token)
@@ -65,7 +65,7 @@ export const login = async (req, res) => {
 
     } catch (error) {
         // console.log(error)
-        res.status(500).json({ message: error.message })
+        res.status(500).json([error.message])
     }
 };
 
@@ -112,3 +112,4 @@ export const verifyToken = async (req, res) => {
         })
     })
 }
+
