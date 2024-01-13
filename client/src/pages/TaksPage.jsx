@@ -21,7 +21,7 @@ function TaksPage() {
     );
   }
 
-  console.log(user);
+  console.log(tasks);
   return (
     <div>
       <div className="grid grid-cols-3 gap-5 w-11/12 m-auto">

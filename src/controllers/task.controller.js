@@ -26,10 +26,15 @@ export const getTask = async (req, res) => {
     res.json(task)
 }
 export const deleteTask = async (req, res) => {
-    const task = await tasksSchema.findById(req.params.id)
+try {
+    const task = await tasksSchema.findByIdAndDelete(req.params.id)
+    // console.log(task)
     if (!task) return res.status(404).json({ message: "Task not found" })
     // res.json(task)
     return res.status(204).json({ message: "Task deleted" })
+} catch (error) {
+    console.log(error)
+}
 }
 export const updateTask = async (req, res) => {
     const task = await tasksSchema.findByIdAndUpdate(req.params.id, req.body, { new: true })
