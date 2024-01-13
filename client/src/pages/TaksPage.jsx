@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTasks } from "../context/TaskContext";
+import TaskCard from "../Components/TaskCard";
 
 function TaksPage() {
   const { user } = useAuth();
@@ -23,15 +24,11 @@ function TaksPage() {
   console.log(user);
   return (
     <div>
-      <h1>TaksPage</h1>
-      <h2>Hi {user.username}</h2>
-
-      {tasks.map((task) => (
-        <div key={task._id}>
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-        </div>
-      ))}
+      <div className="grid grid-cols-3 gap-5 w-11/12 m-auto">
+        {tasks.map((task) => (
+          <TaskCard task={task} key={task._id} />
+        ))}
+      </div>
     </div>
   );
 }
