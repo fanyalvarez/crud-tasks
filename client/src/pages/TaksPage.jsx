@@ -24,7 +24,7 @@ function TaksPage() {
   // console.log(tasks);
   return (
     <div>
-      <div className="grid grid-cols-3 gap-5 w-11/12 m-auto">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 w-11/12 m-auto">
         {tasks.map((task) => (
           <TaskCard task={task} key={task._id} />
         ))}

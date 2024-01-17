@@ -14,12 +14,12 @@ function Navbar() {
           <>
             <li>Welcome {user.username}</li>
             <li><Link to="/add-tasks">Add Task</Link></li>
-            <li><Link to="/" onClick={() => logout()} className="bg-rose-900 px-4 py-2 rounded-sm">Logout</Link></li>
+            <li><Link to="/" onClick={() => logout()} className="bg-rose-900 px-4 py-2 rounded">Logout</Link></li>
           </>
         ) : (
           <>
-            <li><Link to="/login" className="bg-rose-900 px-4 py-2 rounded-sm">Login</Link></li>
-            <li><Link to="/register" className="bg-rose-900 px-4 py-2 rounded-sm">Register</Link></li>
+            <li><Link to="/login" className="bg-rose-900 px-4 py-2 rounded">Login</Link></li>
+            <li><Link to="/register" className="bg-rose-900 px-4 py-2 rounded">Register</Link></li>
           </>
         )}
       </ul>
