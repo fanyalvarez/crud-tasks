@@ -70,7 +70,7 @@ function TasksFormPage() {
             className="w-full bg-zinc-700 rounded-md text-white px-4 py-2 my-3"
           />
 
-          <button className="bg-sky-700 px-4 py-2 rounded">save</button>
+          <button className="bg-sky-700 px-4 py-2 rounded">Save</button>
         </form>
       </div>
     </div>
