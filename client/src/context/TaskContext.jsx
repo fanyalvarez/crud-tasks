@@ -32,7 +32,7 @@ export function TaskProvider({ children }) {
 
   const createTasks = async (tasks) => {
     const resp = await createTaskRequest(tasks);
-    console.log(resp);
+    // console.log(resp);
   };
 
   const deleteTask = async (id) => {
@@ -40,7 +40,7 @@ export function TaskProvider({ children }) {
       const res = await deleteTaskRequest(id);
       if (res.status === 204) setTasks(tasks.filter((task) => task._id !== id));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

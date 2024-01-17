@@ -29,22 +29,22 @@ export const AuthProvider = ({ children }) => {
       const resp = await registerRequest(user);
       setUser(resp.data);
       setIsAuthenticated(false); 
-      console.log(user);
+      // console.log(user);
     } catch (error) {
       setErrors(error.response.data); 
-      console.log(errors);
+      console.error(errors);
     }
   };
 
   const signin = async (user) => {
     try {
       const resp = await loginRequest(user);
-      console.log(resp);
+      // console.log(resp);
       setIsAuthenticated(true);
       setUser(resp.data);
     } catch (error) {
       setErrors(error.response.data);
-      console.log(errors);
+      console.error(errors);
 
     }
   };

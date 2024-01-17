@@ -15,7 +15,7 @@ export const createTask = async (req, res) => {
     try {
         const { title, description, date } = req.body
 
-        console.log(req.user, "createdtask")
+        // console.log(req.user, "createdtask")
         const newTaks = new tasksSchema({
             title,
             description,
@@ -45,7 +45,7 @@ export const deleteTask = async (req, res) => {
         // res.json(task)
         return res.status(204).json({ message: "Task deleted" })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 export const updateTask = async (req, res) => {

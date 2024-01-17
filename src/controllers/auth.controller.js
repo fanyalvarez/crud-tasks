@@ -38,7 +38,7 @@ export const register = async (req, res) => {
         })
 
     } catch (error) {
-        // console.log(error)
+        console.error(error)
         res.status(500).json([error.message])
     }
 };
@@ -64,52 +64,64 @@ export const login = async (req, res) => {
         })
 
     } catch (error) {
-        // console.log(error)
+        console.error(error)
         res.status(500).json([error.message])
     }
 };
 
 export const logout = (req, res) => {
-    res.cookie("token", "", {
-        expires: new Date(0)
-    })
-    return res.sendStatus(200)
+    try {
+        res.cookie("token", "", {
+            expires: new Date(0)
+        })
+        return res.sendStatus(200)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 export const profile = async (req, res) => {
-    // console.log(req.user.payload.id,"userid")
-    const userFound = await User.findById(req.user.payload.id)
+    try {
+        // console.log(req.user.payload.id,"userid")
+        const userFound = await User.findById(req.user.payload.id)
 
-    if (!userFound) return res.status(400).json({ message: "User not found" })
+        if (!userFound) return res.status(400).json({ message: "User not found" })
 
-    return res.json({
-        id: userFound._id,
-        username: userFound.username,
-        email: userFound.email,
-        createdAt: userFound.createdAt,
-        updatedAt: userFound.updatedAt
-    })
+        return res.json({
+            id: userFound._id,
+            username: userFound.username,
+            email: userFound.email,
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt
+        })
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 export const verifyToken = async (req, res) => {
-    const { token } = req.cookies
+    try {
+        const { token } = req.cookies
 
-    if (!token) return res.status(401).json({ message: 'Unauthorized no token' })
-    console.log(token)
+        if (!token) return res.status(401).json({ message: 'Unauthorized no token' })
+        // console.log(token)
 
-    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-        if (err) return res.status(401).json({ message: 'Unauthorized err with token' })
+        jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+            if (err) return res.status(401).json({ message: 'Unauthorized err with token' })
 
-        const userFound = await User.findById(user.payload.id)
-        // console.log(userFound, 'userFound')
+            const userFound = await User.findById(user.payload.id)
+            // console.log(userFound, 'userFound')
 
-        if (!userFound) return res.status(401).json({ message: 'Unauthorized user not exist' })
+            if (!userFound) return res.status(401).json({ message: 'Unauthorized user not exist' })
 
-        return res.json({
-            id: userFound.id,
-            username: userFound.username,
-            email: userFound.email
+            return res.json({
+                id: userFound.id,
+                username: userFound.username,
+                email: userFound.email
+            })
         })
-    })
+    } catch (error) {
+        console.error(error)
+    }
 }
 
