@@ -104,7 +104,7 @@ export const verifyToken = async (req, res) => {
         const { token } = req.cookies
 
         if (!token) return res.status(401).json({ message: 'Unauthorized no token' })
-        // console.log(token)
+        console.log(token)
 
         jwt.verify(token, TOKEN_SECRET, async (err, user) => {
             if (err) return res.status(401).json({ message: 'Unauthorized err with token' })
