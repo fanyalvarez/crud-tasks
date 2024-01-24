@@ -5,12 +5,13 @@ import cors from 'cors'
 
 import authRoutes from "./routes/auth.routes.js";
 import tasksRoutes from "./routes/tasks.routes.js";
+import { PORT_FRONT } from './config.js';
 
 
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5174',
+    origin: `http://localhost:${PORT_FRONT}`,
     credentials:true
 }));
 app.use(morgan('dev'));
