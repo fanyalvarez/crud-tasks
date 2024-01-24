@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+import { MONGODB_URL } from './config.js';
 
 
 //conexion de mongo
 export const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb+srv://alvarezpestefania:ZvECDSHSCNw98Rt9@cluster0.yry6cqu.mongodb.net/?retryWrites=true&w=majority")
+        await mongoose.connect(MONGODB_URL)
         console.log('>>>DB CONNECT')
 
     } catch (error) {
